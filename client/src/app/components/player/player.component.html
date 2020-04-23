@@ -1,0 +1,27 @@
+<div class='albumImage'>
+    <span *ngIf='song.album'>
+        <img class='playImageAlbum' src='{{getImageAlbumUrl + albumImage}}' />
+    </span>
+    <span *ngIf='!song.album'>
+        <img class='playImageAlbum' src='assets/images/player.jpeg' />
+    </span>
+</div>
+
+<div class='audioFile'>
+    <p>Reproduciendo:</p>
+    <p>
+        <span class='playSongTitle'>
+            {{song.name}}
+        </span>
+        |
+        <span class='playSongArtist'>
+            <span *ngIf='artistName'>
+                {{artistName}}
+            </span>
+        </span>
+    </p>
+    <audio controls id='player'>
+        <source id='mp3Source' src='{{getSongFileUrl+ song.file}}' type='audio/mpeg' />
+        Tu navegador no es compatible
+    </audio>
+</div>

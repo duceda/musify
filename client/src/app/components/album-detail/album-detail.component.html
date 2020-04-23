@@ -1,0 +1,40 @@
+<div class='albumBox' *ngIf='album'>
+    <div class='albumHeadCard col-lg-12 d-flex'>
+        <div class='albumDetailImage col-lg-5'>
+            <img *ngIf='album.image && album.image !== "null"' src='{{getImageAlbumUrl+album.image}}' />
+        </div>
+        <div class='albumDetailData col-lg-4'>
+            <h1>{{album.title}}</h1>
+            <p>{{artist.name}}</p>
+            <p>{{album.year}}</p>
+            <p class='albumDetailDescription'>{{album.description}}</p>
+
+            <a *ngIf='identity && identity.role === "ROLE_ADMIN"' [routerLink]='["/crear-tema", albumId]'
+                class='btn btn-primary'>
+                Añadir Canción
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class='gallerySongs' *ngIf='songs && songs.length > 0'>
+    <ul class='songList'>
+        <li *ngFor='let song of songs' class='col-lg-12 songItem'>
+            <div class='songName'>
+                <a class='playButton btn btn-success' (click)='startPlayer(song)'>
+                    <i class="fas fa-play"></i>
+                </a>
+                {{song.number + '. ' + song.name +  ' - ' + song.duration}}
+                <div class='buttons' *ngIf='(identity && identity.role === "ROLE_ADMIN") && (confirmado !== song._id)'>
+                    <a [routerLink]='["/editar-tema", song._id]' class='btn btn-warning'>Editar</a>
+                    <a (click)='onDeleteConfirm(song._id)' class='btn btn-danger'>Borrar</a>
+                </div>
+
+                <div class='buttons' *ngIf='confirmado === song._id'>
+                    <a class='btn btn-primary' (click)='onCancelSong()'>Cancelar</a>
+                    <a class='btn btn-danger' (click)='onDeleteSong(song._id)'>Eliminar</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

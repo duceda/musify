@@ -1,0 +1,7 @@
+.albumHeadCard {
+    overflow: hidden;
+}
+
+.albumHeadCard .albumDetailImage img{
+    width: 350px;
+}

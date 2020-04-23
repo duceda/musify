@@ -1,0 +1,7 @@
+.artistHeadCard {
+    overflow: hidden;
+}
+
+.artistHeadCard .artistDetailImage img{
+    width: 160px;
+}

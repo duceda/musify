@@ -1,0 +1,45 @@
+<div *ngIf='identity && identity.role === "ROLE_ADMIN"' class='col-lg-6'>
+    <h1>{{titulo}}</h1>
+    <div *ngIf='alertMessage'>
+        <div class="alert alert-primary" role="alert">
+            <strong>Info: </strong> {{alertMessage}}
+        </div>
+    </div>
+
+    <form #formAlbum='ngForm' (ngSubmit)='onSubmit()' class='col-md-7'>
+        <p>
+            <label>Título</label>
+            <input type="text" #title='ngModel' name='title' [(ngModel)]='album.title' class='form-control' required
+                class='form-control' />
+            <span *ngIf='!title.valid && title.touched'>El título es obligatorio</span>
+        </p>
+
+        <p>
+            <label>Descripción</label>
+            <input type="text" #description='ngModel' name='description' [(ngModel)]='album.description'
+                class='form-control' required />
+            <span *ngIf='!description.valid && description.touched'>La descripción es obligatoria</span>
+        </p>
+
+        <p>
+            <label>Año</label>
+            <input type="text" #year='ngModel' name='year' [(ngModel)]='album.year' class='form-control' required />
+            <span *ngIf='!year.valid && year.touched'>El año es obligatorio</span>
+        </p>
+
+        <div *ngIf='isEdit'>
+            <div class='albumImageForEdit'>
+                <img src='{{getImageAlbumUrl+album.image}}' class='userImage' />
+                <label>Sube la imagen del album</label>
+                <input type="file" placeholder='Subir Imagen ...' (change)='fileChangeEvent($event)' />
+            </div>
+        </div>
+
+        <input type="submit" value='Añadir Album' class='btn btn-success' [disabled]='!formAlbum.form.valid' />
+    </form>
+</div>
+
+<div *ngIf='!identity || identity.role !== "ROLE_ADMIN"' class='col-lg-6'>
+    <h1>Error</h1>
+    <p>No tienes acceso a esta parte de la aplicación.</p>
+</div>

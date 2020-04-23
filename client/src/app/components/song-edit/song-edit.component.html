@@ -1,0 +1,51 @@
+<div *ngIf='identity && identity.role === "ROLE_ADMIN"' class='col-lg-6'>
+    <h1>{{titulo}}</h1>
+    <div *ngIf='alertMessage'>
+        <div class="alert alert-primary" role="alert">
+            <strong>Info: </strong> {{alertMessage}}
+        </div>
+    </div>
+
+    <form #formSong='ngForm' (ngSubmit)='onSubmit()' class='col-md-7'>
+        <p>
+            <label>Número</label>
+            <input type="text" #number='ngModel' name='number' [(ngModel)]='song.number' class='form-control' required
+                class='form-control' />
+            <span *ngIf='!number.valid && number.touched'>El número de canción es obligatorio</span>
+        </p>
+
+        <p>
+            <label>Título</label>
+            <input type="text" #name='ngModel' name='name' [(ngModel)]='song.name' class='form-control' required
+                class='form-control' />
+            <span *ngIf='!name.valid && name.touched'>El título es obligatorio</span>
+        </p>
+
+        <p>
+            <label>Duración</label>
+            <input type="text" #duration='ngModel' name='duration' [(ngModel)]='song.duration' class='form-control'
+                required />
+            <span *ngIf='!duration.valid && duration.touched'>La duración es obligatoria</span>
+        </p>
+
+        <div *ngIf='isEdit'>
+            <div class='songForEdit' *ngIf='song.file && song.file !== "null"'>
+                <audio controls>
+                    <source src='{{getSongAlbumUrl+song.file}}' type='audio/mpeg' />
+                    El navegador web no soporta la reproducción del audio
+                </audio>
+            </div>
+            <p>
+                <label>Sube el fichero de canción</label>
+                <input type="file" placeholder='Subir Canción ...' (change)='fileChangeEvent($event)' />
+            </p>
+        </div>
+
+        <input type="submit" value='Editar Canción' class='btn btn-success' [disabled]='!formSong.form.valid' />
+    </form>
+</div>
+
+<div *ngIf='!identity || identity.role !== "ROLE_ADMIN"' class='col-lg-6'>
+    <h1>Error</h1>
+    <p>No tienes acceso a esta parte de la aplicación.</p>
+</div>
